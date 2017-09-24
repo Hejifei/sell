@@ -21,6 +21,38 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+
+//引用json数据
+var appData = require('../data.json')
+var seller = appData.seller;
+var goods = appData.goods;
+var ratings = appData.ratings;
+//定义路由
+var apiRoutes = express.Router();
+//接口
+apiRoutes.get('/seller',function(req,res){
+	res.json({
+		errno: 0,
+		data: seller
+	})
+})
+apiRoutes.get('/goods',function(req,res){
+	res.json({
+		errno: 0,
+		data: goods
+	})
+})
+apiRoutes.get('/ratings',function(req,res){
+	res.json({
+		errno: 0,
+		data: ratings
+	})
+})
+//实现接口路由
+app.use('/api',apiRoutes);
+//chrome jsonView插件安装
+//可通过http://localhost:8080/api/seller查看接口
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
