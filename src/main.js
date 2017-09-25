@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 const routes = [{
   path: '/',
-  redirect: '/ratings'
+  redirect: '/goods'
 }, {
   path: '/goods',
   component: goods
