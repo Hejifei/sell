@@ -4,7 +4,7 @@
 			菜单
 		</div>
 		<div class="foods-wrapper">
-		
+		aaa
 		</div>
 	</div>
 </template>
