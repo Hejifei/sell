@@ -1,6 +1,6 @@
 <template>
 	<div class="goods">
-		<div class="menu-wrapper" v-el:menu-wrapper>
+		<div class="menu-wrapper"  ref="menuWrapper">
 			<ul>
 				<li v-for="item in goods" class="menu-item">
 					<span class="text border-1px">
@@ -10,7 +10,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="foods-wrapper" v-el:food-wrapper>
+		<div class="foods-wrapper"  ref="foodsWrapper">
 			<ul>
 				<li v-for="item in goods" class="food-List">
 					<h1 class="title">{{item.name}}</h1>
@@ -60,14 +60,27 @@
     		response = response.body;
 				if(response.errno === ERR_OK){
 					this.goods = response.data;
+//					$nextTick使得异步为同步
+					this.$nextTick(() => {
+						this._initScroll();
+					})
 				}
   			});
 		},
-		method() {
+		methods: {
 			_initScroll() {
-				this.menuScroll = new BScroll(this.$els.menuWrapper, {});
-				
-				this.foods
+				this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+          			click: true
+        		})
+
+        		this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+          			click: true,
+          			probeType: 3
+        		})
+//				let menuwrapper = document.querySelector('.menu-wrapper');
+//				let menuScroll = new BScroll(menuwrapper, {});
+//				let foodswrapper = document.querySelector('.foods-wrapper')
+//				let foodsScroll = new BScroll(foodswrapper, {})
 			}
 		}
 	}
@@ -107,7 +120,7 @@
 						.desc,.extra{line-height: 10px;font-size: 10px;color: rgb(147,153,159);}
 						.desc{margin-bottom: 8px;}
 						.extra{line-height: 10px;
-							&.count{margin-right: 12px;}
+							.count{margin-right: 12px;}
 						}
 						.price{font-weight: 700;line-height: 24px;
 							.now{margin-right: 8px;font-size: 14px;color: rgb(240,20,20);}
