@@ -27,18 +27,18 @@
         		type: Array,
         		default() {
           			return [
-            					{
-              						price: 10,
-              						count: 1
-            					}
-          					];
-        				}
+            				{
+              					price: 10,
+              					count: 1
+            				}
+          				];
+        		}
       		},
-			deliveryPrice:{
+			deliveryPrice: { 
 				type: Number,
 				default: 0
 			},
-			minPrice:{
+			minPrice: {
 				type: Number,
 				default: 0
 			}
@@ -60,7 +60,7 @@
 			},
 			payDesc() {
 				if(this.totalPrice === 0){
-					return `￥${minPrice}元起送`;
+					return `￥${this.minPrice}元起送`;
 				}else if(this.totalPrice < this.minPrice){
 					let diff = this.minPrice - this.totalPrice;
 					return `还差${diff}元起送`;

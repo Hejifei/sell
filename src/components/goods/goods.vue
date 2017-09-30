@@ -30,7 +30,7 @@
 									<span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
 								</div>
 								<div class="cartcontrol-wrapper">
-									<cartcontrol :food="food"></cartcontrol>
+									<cartcontrol  @add="addFood" :food="food"></cartcontrol>
 								</div>
 							</div>
 						</li>
@@ -38,7 +38,7 @@
 				</li>
 			</ul>
 		</div>
-		<shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
+		<shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
 	</div>
 </template>
 
@@ -72,7 +72,18 @@
 					}
 				}
 				return 0;
-			}
+			},
+			selectFoods() {
+        		let foods = [];
+        		this.goods.forEach((good) => {
+          			good.foods.forEach((food) => {
+            			if (food.count) {
+              				foods.push(food);
+						}
+          			});
+        		});
+        		return foods;
+      		}
 		},
 		created() {
 			this.classMap = ['decrease','discount','special','invoice','guarantee'];
@@ -99,6 +110,9 @@
 				let el = foodList[index];
 				this.foodsScroll.scrollToElement(el,300);
 			},
+			addFood(target) {
+        		this._drop(target);
+      		},
 			_initScroll() {
 				this.meunScroll = new BScroll(this.$refs.menuWrapper, {
           			click: true
