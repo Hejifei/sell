@@ -32,6 +32,9 @@
 				}else{
 					this.food.count++;
 				}
+				// 自定义事件：this.$emit("自定义事件名",要传送的数据)
+				// v-on:自定义事件名="在methods中的函数名"
+				this.$emit('add', event.target);
 			},
 			decreaseCart(event) {
 				if(!event._constructed){
